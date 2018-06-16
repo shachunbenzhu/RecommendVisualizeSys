@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>推荐系统</title>
+</head>
+<style type="text/css">
+    body { padding: 0 5em; margin:0 }
+    h2 { padding: 2em lem }
+    h1 { padding: 2em lem; background:#D1EEEE }
+    h4 { color: #bf8; padding-left: 15px}
+    table {margin-top:10px;}
+    a:link {text-decoration: none; color:#63B8FF;}      /* 未访问链接*/
+    a:visited {text-decoration: none; color:#00FF00;}  /* 已访问链接 */
+    a:hover {text-decoration: none; color:#FF00FF;}  /* 鼠标移动到链接上 */
+    a:active {text-decoration: none; color:#63B8FF;}  /* 鼠标点击时 */
+
+    div.img {
+        margin: 30px;
+        border: 1px solid #ccc;
+        float: left;
+        width: 200px;
+    }
+
+    div.img:hover {
+        border: 1px solid #777;
+    }
+
+    div.img img {
+        width: 100%;
+        height: 150;
+    }
+
+    div.desc {
+        padding: 15px;
+        text-align: center;
+    }
+
+    div.name {
+        font-size: 25px;
+    }
+
+    div.description {
+        padding: 10px;
+    }
+
+    div.abstract {
+        padding: 10px;
+        margin-left: 35px;
+        color: #AAAAAA
+    }
+
+    div.birth {
+        padding: 10px;
+        font-size: 14px;
+    }
+  </style>
+<body>
+    <h1><center>RecommendSystem</center></h1>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

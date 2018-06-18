@@ -1,22 +1,24 @@
 {% extends "base.html" %}  
 {% block content %}  
-{% for post in posts %}
-
+<form action="/select/" method="get">
 <table class="tabl">
     <tr>
         <td>
             选择查询类型
-            <select id="search_type">
-                <option id="author">作者</option>
-                <option id="type">类型</option>
-                <option id="subject">主题</option>
+            <select name="search_type">
+                <option name="author">作者</option>
+                <option name="type">类型</option>
+                <option name="subject">主题</option>
             </select>
+            <input type="text" name="search_condition"/>
         </td>
         <td>
-            <input id="search_condition"/>
+            <input type="submit" value="查询">
         </td>
     </tr>
 </table>
+</form>
+{% for post in posts %}
 <table>
     <tr>
         <td rowspan="3">
@@ -31,18 +33,19 @@
               </div>
             </div>
         </td>
-        <td><div class="name"><a href="{{  post.surl }}">{{ post.name}}</a></div></td>
     </tr>
     <tr>
         <td>
-            <div class="description">简介：{{ post.description}}</div>
-            <div class="abstract">摘要：{{ post.abstract }}</div>
+            <div class="subject">主题：{{ post.subject }}</div>
         </td>
     </tr>
     <tr>
-        <td><div class="birth">{{ post.birthDate}}</div></td>
+        <td><div class="abstract">{{ post.abstract}}</div></td>
     </tr>
 </table>
+<hr style=" height:1px;border:none;border-top:1px dotted #CDC5BF;" >
+<p>&nbsp;</p>
+{% endfor %}
 <table class="tabl">
     <tr>
         <td>
@@ -53,25 +56,24 @@
                 <option id="game">游戏</option>
             </select>
         </td>
-        <td>
-            <input id="recommend_condition"/>
-        </td>
     </tr>
 </table>
 <table>
     <tr>
+        {% for postRecommend in postsRecommend %}
         <td>
             推荐列表
             <!--<img src="{{ post.thumbnail}}" width="200px" height="200px" alt="链接失效" border="">-->
             <div class="responsive">
               <div class="img">
-                <a target="_blank" href="{{ post.thumbnail }}">
-                  <img src="{{ post.thumbnail }}" alt="链接失效" width="200" height="150">
+                <a target="_blank" href="{{ postRecommend.thumbnail }}">
+                  <img src="{{ postRecommend.thumbnail }}" alt="链接失效" width="200" height="150">
                 </a>
-                <div class="desc"><a href="{{  post.surl }}">{{ post.name}}</a></div>
+                <div class="desc"><a href="{{  postRecommend.surl }}">{{ postRecommend.name}}</a></div>
               </div>
             </div>
         </td>
+        {% endfor %}
     </tr>
 </table>
 <table>
@@ -81,7 +83,4 @@
         </td>
     </tr>
 </table>
-<hr style=" height:1px;border:none;border-top:1px dotted #CDC5BF;" >
-<p>&nbsp;</p>
-{% endfor %}  
 {% endblock %}

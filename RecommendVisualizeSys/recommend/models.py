@@ -6,11 +6,52 @@ class RecommendPost(models.Model):
     surl = models.CharField(max_length=150)
     name = models.CharField(max_length = 150)
     thumbnail = models.ImageField()
-    birthDate = models.DateField()
-    description = models.CharField(max_length = 150)
+    #birthDate = models.DateField()
     abstract = models.TextField()
+    subject = models.CharField(max_length=150)
 
-class ScientistPostAdmin(admin.ModelAdmin):
-    list_display = ('surl', 'name', 'thumbnail', 'birthDate', 'description', 'abstract')
+    def __str__(self):
+        return self.name
 
-admin.site.register(RecommendPost, ScientistPostAdmin)
+class RecommendPostAdmin(admin.ModelAdmin):
+    list_display = ('surl', 'name', 'thumbnail', 'subject', 'abstract')
+    search_fields = ['name']
+
+
+class FilmRecommendPost(models.Model):
+    surl = models.CharField(max_length=150)
+    name = models.CharField(max_length = 150)
+
+    def __str__(self):
+        return self.name
+
+class FilmRecommendPostAdmin(admin.ModelAdmin):
+    list_display = ('surl', 'name')
+    search_fields = ['name']
+
+class BookRecommendPost(models.Model):
+    surl = models.CharField(max_length=150)
+    name = models.CharField(max_length = 150)
+
+    def __str__(self):
+        return self.name
+
+class BookRecommendPostAdmin(admin.ModelAdmin):
+    list_display = ('surl', 'name')
+    search_fields = ['name']
+
+class GameRecommendPost(models.Model):
+    surl = models.CharField(max_length=150)
+    name = models.CharField(max_length = 150)
+
+    def __str__(self):
+        return self.name
+
+class GameRecommendPostAdmin(admin.ModelAdmin):
+    list_display = ('surl', 'name')
+    search_fields = ['name']
+
+admin.site.register(RecommendPost, RecommendPostAdmin)
+admin.site.register(FilmRecommendPost, FilmRecommendPostAdmin)
+admin.site.register(BookRecommendPost, BookRecommendPostAdmin)
+admin.site.register(GameRecommendPost, GameRecommendPostAdmin)

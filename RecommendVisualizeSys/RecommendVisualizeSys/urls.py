@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from recommend.views import recommend
+from recommend.views import init,select
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('recommend/', recommend),
+    path('recommend/', init),
+    path('select/', select),
 ]

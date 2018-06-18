@@ -10,12 +10,14 @@ def getInitResult() :
         	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         	PREFIX dct: <http://purl.org/dc/terms/>
 
-        	SELECT distinct ?movie ?name ?subject ?thumnail ?abstract
+        	SELECT distinct ?movie ?name ?director ?subject ?country ?thumnail ?abstract
             WHERE
             {
                 ?movie rdf:type dbo:Film.
                 ?movie rdfs:label ?name.
                 ?movie dbo:abstract ?abstract.
+                ?movie dbo:director ?director.
+                ?movie dbp:country ?country.
                 OPTIONAL{
         			?movie dbo:thumbnail ?thumnail.
                 } 
@@ -37,8 +39,7 @@ def getSelectResult(search_type, search_condition) :
                 	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                 	PREFIX dct: <http://purl.org/dc/terms/>
 
-                	SELECT distinct ?movie ?name ?subject ?thumnail ?abstract
-                    FROM <http://en.dbpedia.org>
+                	SELECT distinct ?movie ?name ?director ?subject ?country ?thumnail ?abstract
                     WHERE
                     {
                         ?movie rdf:type dbo:Film.
@@ -47,6 +48,8 @@ def getSelectResult(search_type, search_condition) :
                         ?movie rdfs:label ?name.
                         FILTER(REGEX(?name,"月球","i")).
                         ?movie dbo:abstract ?abstract.
+                        ?movie dbo:director ?director.
+                        ?movie dbp:country ?country.
                         OPTIONAL{
                 			?movie dbo:thumbnail ?thumnail.
                 		} 
@@ -71,8 +74,7 @@ def getSelectResult(search_type, search_condition) :
                         	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                         	PREFIX dct: <http://purl.org/dc/terms/>
 
-                        	SELECT distinct ?movie ?name ?subject ?thumnail ?abstract
-                            FROM <http://en.dbpedia.org>
+                        	SELECT distinct ?movie ?name ?director ?subject ?country ?thumnail ?abstract
                             WHERE
                             {
                                 ?movie rdf:type ?type.
@@ -84,6 +86,8 @@ def getSelectResult(search_type, search_condition) :
                         			?movie dbo:thumbnail ?thumnail.
                         		} 
                                 ?movie dct:subject ?subject.
+                                ?movie dbo:director ?director.
+                                ?movie dbp:country ?country.
                             } 
                             ORDER BY DESC(?movie)
                             limit 5
@@ -95,7 +99,7 @@ def getSelectResult(search_type, search_condition) :
                         	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                         	PREFIX dct: <http://purl.org/dc/terms/>
 
-                        	SELECT distinct ?movie ?name ?subject ?thumnail ?abstract
+                        	SELECT distinct ?movie ?name ?director ?subject ?country ?thumnail ?abstract
                             WHERE
                             {
                                 ?movie rdf:type dbo:Film.
@@ -107,6 +111,8 @@ def getSelectResult(search_type, search_condition) :
                         		} 
                                 ?movie dct:subject ?subject.
                                 FILTER(REGEX(?subject,"%s","i")).
+                                ?movie dbo:director ?director.
+                                ?movie dbp:country ?country.
                             } 
                             ORDER BY DESC(?movie)
                             limit 5
@@ -116,7 +122,9 @@ def getSelectResult(search_type, search_condition) :
     return results
 
 
-def getFilmResult() :
+def getFilmResult(post) :
+    url = str(post.surl)
+    post.url = "dbr:" + url[url.rfind("/") + 1:len(url)]
     name = "月球"
     sparql.setQuery("""
            PREFIX dbo: <http://dbpedia.org/ontology/>
@@ -124,21 +132,27 @@ def getFilmResult() :
         	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         	PREFIX dct: <http://purl.org/dc/terms/>
 
-        	SELECT distinct ?movie ?name ?subject ?thumnail ?abstract
+            SELECT COUNT(?movie) SAMPLE(?movie) ?movie ?name
             WHERE
             {
                 ?movie rdf:type dbo:Film.
-                ?movie rdfs:label ?name.
-                FILTER(REGEX(?name,"%s","i")).
+                ?movie dct:subject ?subject.
+                FILTER(REGEX(?subject,"%s","i")).
+                ?movie dbo:director ?director.
+                FILTER(REGEX(?director,"%s","i")).
+                ?movie dbp:country ?country.
+                FILTER(REGEX(?country,"%s","i")).
+                FILTER (?movie != "%s") .
             } 
-            ORDER BY DESC(?movie)
-            limit 5
-        """ % name)
+            GROUP BY ?movie, ?name
+            ORDER BY DESC(COUNT(?movie))
+            Limit 5
+        """ %(post.subject, post.director, post.country, url))
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
     return results
 
-def getBookResult() :
+def getBookResult(post) :
     name = "月球"
     sparql.setQuery("""
            PREFIX dbo: <http://dbpedia.org/ontology/>
@@ -160,7 +174,7 @@ def getBookResult() :
     results = sparql.query().convert()
     return results
 
-def getGameResult() :
+def getGameResult(post) :
     name = "月球"
     sparql.setQuery("""
            PREFIX dbo: <http://dbpedia.org/ontology/>

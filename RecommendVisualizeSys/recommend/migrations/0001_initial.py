@@ -11,15 +11,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='RecommendPost',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('surl', models.CharField(max_length=150)),
-                ('name', models.CharField(max_length=150)),
-                ('thumbnail', models.ImageField(upload_to='')),
-                ('abstract', models.TextField()),
-                ('subject', models.CharField(max_length=150)),
-            ],
-        ),
+
     ]

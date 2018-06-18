@@ -5,6 +5,8 @@ from django.contrib import admin
 class RecommendPost(models.Model):
     surl = models.CharField(max_length=150)
     name = models.CharField(max_length = 150)
+    director = models.CharField(max_length=150)
+    country = models.CharField(max_length=150)
     thumbnail = models.ImageField()
     #birthDate = models.DateField()
     abstract = models.TextField()
@@ -14,7 +16,7 @@ class RecommendPost(models.Model):
         return self.name
 
 class RecommendPostAdmin(admin.ModelAdmin):
-    list_display = ('surl', 'name', 'thumbnail', 'subject', 'abstract')
+    list_display = ('surl', 'name', 'director', 'country', 'thumbnail', 'subject', 'abstract')
     search_fields = ['name']
 
 

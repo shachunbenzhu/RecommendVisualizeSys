@@ -40,6 +40,8 @@
 <script>
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover();
+    var search_type = {{ search_type|safe }};
+    $('#sel1').val = search_type;
 });
 </script>
 </head>

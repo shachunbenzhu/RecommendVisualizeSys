@@ -93,11 +93,9 @@ def init(request):
     # 不可以是Context，只能是dict
     return HttpResponse(t.render({'search_type':search_type, 'search_condition':search_condition, 'posts': posts, 'postsFilmRecommend': postsFilmRecommend, 'postsBookRecommend': postsBookRecommend, 'postsGameRecommend': postsGameRecommend}))
 
-
 def select(request):
     search_type = request.GET['search_type']
     search_condition = request.GET['search_condition']
-
     if search_type == "请选择...":
         search_condition = ""
     results = sparqlSelect.getSelectResult(search_type, search_condition)

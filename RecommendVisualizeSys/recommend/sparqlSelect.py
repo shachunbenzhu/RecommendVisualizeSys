@@ -10,7 +10,7 @@ def getInitResult() :
         	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         	PREFIX dct: <http://purl.org/dc/terms/>
 
-        	SELECT distinct ?movie ?name ?director ?subject ?country ?thumnail ?abstract 
+        	SELECT distinct ?movie ?name ?director ?subject ?country ?thumbnail ?abstract 
             WHERE
             {
                 ?movie rdf:type dbo:Film.
@@ -19,7 +19,7 @@ def getInitResult() :
                 ?movie dbo:director ?director.
                 ?movie dbp:country ?country.
                 OPTIONAL{
-        			?movie dbo:thumbnail ?thumnail.
+        			?movie dbo:thumbnail ?thumbnail.
                 } 
                 ?movie dct:subject ?subject.
                 FILTER(REGEX(?name,"%s","i")).
@@ -39,7 +39,7 @@ def getSelectResult(search_type, search_condition) :
                 	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                 	PREFIX dct: <http://purl.org/dc/terms/>
 
-                	SELECT distinct ?movie ?name ?director ?subject ?country ?thumnail ?abstract
+                	SELECT distinct ?movie ?name ?director ?subject ?country ?thumbnail ?abstract
                     WHERE
                     {
                         ?movie rdf:type dbo:Film.
@@ -51,7 +51,7 @@ def getSelectResult(search_type, search_condition) :
                         ?movie dbo:director ?director.
                         ?movie dbp:country ?country.
                         OPTIONAL{
-                			?movie dbo:thumbnail ?thumnail.
+                			?movie dbo:thumbnail ?thumbnail.
                 		} 
                         ?movie dct:subject ?subject.                        
                     } 
@@ -74,7 +74,7 @@ def getSelectResult(search_type, search_condition) :
                         	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                         	PREFIX dct: <http://purl.org/dc/terms/>
 
-                        	SELECT distinct ?movie ?name ?director ?subject ?country ?thumnail ?abstract
+                        	SELECT distinct ?movie ?name ?director ?subject ?country ?thumbnail ?abstract
                             WHERE
                             {
                                 ?movie rdf:type ?type.
@@ -83,7 +83,7 @@ def getSelectResult(search_type, search_condition) :
                                 FILTER(REGEX(?name,"月球","i")).
                                 ?movie dbo:abstract ?abstract.
                                 OPTIONAL{
-                                    ?movie dbo:thumbnail ?thumnail.
+                                    ?movie dbo:thumbnail ?thumbnail.
                                 } 
                                 ?movie dct:subject ?subject.
                                 ?movie dbo:director ?director.
@@ -99,7 +99,7 @@ def getSelectResult(search_type, search_condition) :
                         	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                         	PREFIX dct: <http://purl.org/dc/terms/>
 
-                        	SELECT distinct ?movie ?name ?director ?subject ?country ?thumnail ?abstract
+                        	SELECT distinct ?movie ?name ?director ?subject ?country ?thumbnail ?abstract
                             WHERE
                             {
                                 ?movie rdf:type dbo:Film.
@@ -107,7 +107,7 @@ def getSelectResult(search_type, search_condition) :
                                 FILTER(REGEX(?name,"月球","i")).
                                 ?movie dbo:abstract ?abstract.
                                 OPTIONAL{
-                                    ?movie dbo:thumbnail ?thumnail.
+                                    ?movie dbo:thumbnail ?thumbnail.
                                 } 
                                 ?movie dct:subject ?subject.
                                 FILTER(REGEX(?subject,"%s","i")).
@@ -124,7 +124,7 @@ def getSelectResult(search_type, search_condition) :
                                 	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                                 	PREFIX dct: <http://purl.org/dc/terms/>
 
-                                	SELECT distinct ?movie ?name ?director ?subject ?country ?thumnail ?abstract
+                                	SELECT distinct ?movie ?name ?director ?subject ?country ?thumbnail ?abstract
                                     WHERE
                                     {
                                         ?movie rdf:type dbo:Film.
@@ -132,7 +132,7 @@ def getSelectResult(search_type, search_condition) :
                                         FILTER(REGEX(?name,"%s","i")).
                                         ?movie dbo:abstract ?abstract.
                                         OPTIONAL{
-                                            ?movie dbo:thumbnail ?thumnail.
+                                            ?movie dbo:thumbnail ?thumbnail.
                                         } 
                                         ?movie dct:subject ?subject.
                                         ?movie dbo:director ?director.
@@ -162,7 +162,6 @@ def getFilmResult(post) :
             WHERE
             {
                 ?movie rdf:type dbo:Film.
-                
                 ?movie rdfs:label ?name.
                 ?movie dct:subject ?subject.
                 FILTER(REGEX(?subject,"%s","i")).

@@ -225,6 +225,7 @@ def getGameResult(post) :
             {
                 ?game rdf:type dbo:Game.
                 ?game rdfs:label ?name.
+                
                 FILTER(REGEX(?name,"%s","i")).
                 FILTER (?game != "%s") .
             } 

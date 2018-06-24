@@ -11,6 +11,7 @@ class RecommendPost(models.Model):
     #birthDate = models.DateField()
     abstract = models.TextField()
     subject = models.CharField(max_length=150)
+    #type = models.CharField(max_length=150)
 
     def __str__(self):
         return self.name

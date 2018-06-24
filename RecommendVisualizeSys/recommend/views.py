@@ -36,11 +36,13 @@ def init(request):
         recommendPost.abstract = result["abstract"]["value"]
         recommendPost.subject = result["subject"]["value"]
         subject = str(recommendPost.subject)
-        recommendPost.subject = "dbc:" + subject[subject.rfind("/") + 1:len(subject)]
+        recommendPost.subject = "dbc:" + subject[subject.rfind(":") + 1:len(subject)]
         recommendPost.director = result["director"]["value"]
         director = str(recommendPost.director)
         recommendPost.director = "dbr:" + director[director.rfind("/") + 1:len(director)]
         recommendPost.country = result["country"]["value"]
+        # 查询后的类型结构
+        #recommendPost.type = result["type"]["value"]
         recommendPost.save()
 
     posts = RecommendPost.objects.all()
@@ -49,8 +51,7 @@ def init(request):
         post.subject = subject[subject.find(":") + 1:len(subject)]
 
     post = RecommendPost.objects.all()[:1]  # 根据第一个进行推荐
-
-    resultsFilm = sparqlSelect.getFilmResult()
+    resultsFilm = sparqlSelect.getFilmResult(post[0])
     print(resultsFilm)
     # 在入数据库之前先删除数据，否则后面只是插入，不会更改数据
     postsFilmRecommend = FilmRecommendPost.objects.all()
@@ -62,7 +63,7 @@ def init(request):
         filmRecommendPost.save()
     postsFilmRecommend = FilmRecommendPost.objects.all()
 
-    resultsBook = sparqlSelect.getBookResult()
+    resultsBook = sparqlSelect.getBookResult(post[0])
     print(resultsBook)
     # 在入数据库之前先删除数据，否则后面只是插入，不会更改数据
     postsBookRecommend = BookRecommendPost.objects.all()
@@ -74,7 +75,7 @@ def init(request):
         bookRecommendPost.save()
     postsBookRecommend = BookRecommendPost.objects.all()
 
-    resultsGame = sparqlSelect.getGameResult()
+    resultsGame = sparqlSelect.getGameResult(post[0])
     print(resultsGame)
     # 在入数据库之前先删除数据，否则后面只是插入，不会更改数据
     postsGameRecommend = GameRecommendPost.objects.all()
@@ -90,7 +91,7 @@ def init(request):
     print(posts)
     #c = Context({'posts': posts})
     # 不可以是Context，只能是dict
-    return HttpResponse(t.render({'search_type':search_type, 'search_condition':search_condition, 'posts': posts}))
+    return HttpResponse(t.render({'search_type':search_type, 'search_condition':search_condition, 'posts': posts, 'postsFilmRecommend': postsFilmRecommend, 'postsBookRecommend': postsBookRecommend, 'postsGameRecommend': postsGameRecommend}))
 
 
 def select(request):
@@ -121,11 +122,12 @@ def select(request):
         recommendPost.abstract = result["abstract"]["value"]
         recommendPost.subject = result["subject"]["value"]
         subject = str(recommendPost.subject)
-        recommendPost.subject = "dbc:" + subject[subject.rfind("/") + 1:len(subject)]
+        recommendPost.subject = "dbc:" + subject[subject.rfind(":") + 1:len(subject)]
         recommendPost.director = result["director"]["value"]
         director = str(recommendPost.director)
         recommendPost.director = "dbr:" + director[director.rfind("/") + 1:len(director)]
         recommendPost.country = result["country"]["value"]
+        #recommendPost.type = result["type"]["value"]
         recommendPost.save()
 
     posts = RecommendPost.objects.all()
@@ -133,10 +135,8 @@ def select(request):
         subject = str(post.subject)
         post.subject = subject[subject.find(":") + 1:len(subject)]
 
-    post = RecommendPost.objects.all()[:1]#根据第一个进行推荐
-    
-
-    resultsFilm = sparqlSelect.getFilmResult(post)
+    post = RecommendPost.objects.all()[:1]  # 根据第一个进行推荐
+    resultsFilm = sparqlSelect.getFilmResult(post[0])
     print(resultsFilm)
     # 在入数据库之前先删除数据，否则后面只是插入，不会更改数据
     postsFilmRecommend = FilmRecommendPost.objects.all()
@@ -148,7 +148,7 @@ def select(request):
         filmRecommendPost.save()
     postsFilmRecommend = FilmRecommendPost.objects.all()
 
-    resultsBook = sparqlSelect.getBookResult(post)
+    resultsBook = sparqlSelect.getBookResult(post[0])
     print(resultsBook)
     # 在入数据库之前先删除数据，否则后面只是插入，不会更改数据
     postsBookRecommend = BookRecommendPost.objects.all()
@@ -160,7 +160,7 @@ def select(request):
         bookRecommendPost.save()
     postsBookRecommend = BookRecommendPost.objects.all()
 
-    resultsGame = sparqlSelect.getGameResult(post)
+    resultsGame = sparqlSelect.getGameResult(post[0])
     print(resultsGame)
     # 在入数据库之前先删除数据，否则后面只是插入，不会更改数据
     postsGameRecommend = GameRecommendPost.objects.all()

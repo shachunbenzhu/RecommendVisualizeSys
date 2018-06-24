@@ -10,7 +10,7 @@ def getInitResult() :
         	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         	PREFIX dct: <http://purl.org/dc/terms/>
 
-        	SELECT distinct ?movie ?name ?director ?subject ?country ?thumnail ?abstract
+        	SELECT distinct ?movie ?name ?director ?subject ?country ?thumnail ?abstract 
             WHERE
             {
                 ?movie rdf:type dbo:Film.
@@ -53,7 +53,7 @@ def getSelectResult(search_type, search_condition) :
                         OPTIONAL{
                 			?movie dbo:thumbnail ?thumnail.
                 		} 
-                        ?movie dct:subject ?subject.
+                        ?movie dct:subject ?subject.                        
                     } 
                     ORDER BY DESC(?movie)
                     limit 5
@@ -83,8 +83,8 @@ def getSelectResult(search_type, search_condition) :
                                 FILTER(REGEX(?name,"月球","i")).
                                 ?movie dbo:abstract ?abstract.
                                 OPTIONAL{
-                        			?movie dbo:thumbnail ?thumnail.
-                        		} 
+                                    ?movie dbo:thumbnail ?thumnail.
+                                } 
                                 ?movie dct:subject ?subject.
                                 ?movie dbo:director ?director.
                                 ?movie dbp:country ?country.
@@ -92,9 +92,9 @@ def getSelectResult(search_type, search_condition) :
                             ORDER BY DESC(?movie)
                             limit 5
                         """ % search_condition)
-    else:
+    elif search_type == "主题":
         sparql.setQuery("""
-                           PREFIX dbo: <http://dbpedia.org/ontology/>
+                            PREFIX dbo: <http://dbpedia.org/ontology/>
                         	PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
                         	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                         	PREFIX dct: <http://purl.org/dc/terms/>
@@ -107,8 +107,8 @@ def getSelectResult(search_type, search_condition) :
                                 FILTER(REGEX(?name,"月球","i")).
                                 ?movie dbo:abstract ?abstract.
                                 OPTIONAL{
-                        			?movie dbo:thumbnail ?thumnail.
-                        		} 
+                                    ?movie dbo:thumbnail ?thumnail.
+                                } 
                                 ?movie dct:subject ?subject.
                                 FILTER(REGEX(?subject,"%s","i")).
                                 ?movie dbo:director ?director.
@@ -117,6 +117,30 @@ def getSelectResult(search_type, search_condition) :
                             ORDER BY DESC(?movie)
                             limit 5
                         """ %search_condition)
+    else:
+        sparql.setQuery("""
+                                   PREFIX dbo: <http://dbpedia.org/ontology/>
+                                	PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                                	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                                	PREFIX dct: <http://purl.org/dc/terms/>
+
+                                	SELECT distinct ?movie ?name ?director ?subject ?country ?thumnail ?abstract
+                                    WHERE
+                                    {
+                                        ?movie rdf:type dbo:Film.
+                                        ?movie rdfs:label ?name.
+                                        FILTER(REGEX(?name,"%s","i")).
+                                        ?movie dbo:abstract ?abstract.
+                                        OPTIONAL{
+                                            ?movie dbo:thumbnail ?thumnail.
+                                        } 
+                                        ?movie dct:subject ?subject.
+                                        ?movie dbo:director ?director.
+                                        ?movie dbp:country ?country.
+                                    } 
+                                    ORDER BY DESC(?movie)
+                                    limit 5
+                                """ % search_condition)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
     return results
@@ -124,10 +148,12 @@ def getSelectResult(search_type, search_condition) :
 
 def getFilmResult(post) :
     url = str(post.surl)
-    post.url = "dbr:" + url[url.rfind("/") + 1:len(url)]
-    name = "月球"
-    sparql.setQuery("""
-           PREFIX dbo: <http://dbpedia.org/ontology/>
+    url = "dbr:" + url[url.rfind("/") + 1:len(url)]
+    subject = str(post.subject)
+    subject = subject[subject.rfind(":") + 1:len(subject)]
+    #name = "月球"
+    query = """
+            PREFIX dbo: <http://dbpedia.org/ontology/>
         	PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         	PREFIX dct: <http://purl.org/dc/terms/>
@@ -136,62 +162,77 @@ def getFilmResult(post) :
             WHERE
             {
                 ?movie rdf:type dbo:Film.
+                
+                ?movie rdfs:label ?name.
                 ?movie dct:subject ?subject.
                 FILTER(REGEX(?subject,"%s","i")).
-                ?movie dbo:director ?director.
-                FILTER(REGEX(?director,"%s","i")).
                 ?movie dbp:country ?country.
                 FILTER(REGEX(?country,"%s","i")).
                 FILTER (?movie != "%s") .
             } 
-            GROUP BY ?movie, ?name
+            GROUP BY ?movie ?name
             ORDER BY DESC(COUNT(?movie))
             Limit 5
-        """ %(post.subject, post.director, post.country, url))
+        """ %(subject, post.country, url)
+    sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
     return results
 
 def getBookResult(post) :
-    name = "月球"
+    url = str(post.surl)
+    url = "dbr:" + url[url.rfind("/") + 1:len(url)]
+    subject = str(post.subject)
+    subject = subject[subject.rfind(":") + 1:len(subject)]
+    #name = "月球"
     sparql.setQuery("""
            PREFIX dbo: <http://dbpedia.org/ontology/>
         	PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         	PREFIX dct: <http://purl.org/dc/terms/>
 
-        	SELECT distinct ?book ?name
+            SELECT COUNT(?book) SAMPLE(?book) ?book ?name
             WHERE
             {
                 ?book rdf:type dbo:Book.
                 ?book rdfs:label ?name.
-                FILTER(REGEX(?name,"%s","i")).
+                ?book dct:subject ?subject.
+                FILTER(REGEX(?subject,"%s","i")).
+                FILTER (?book != "%s") .
             } 
-            ORDER BY DESC(?movie)
-            limit 5
-        """ % name)
+            GROUP BY ?book ?name
+            ORDER BY DESC(COUNT(?book))
+            Limit 5
+        """ %(subject, url))
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
     return results
 
 def getGameResult(post) :
-    name = "月球"
-    sparql.setQuery("""
+    url = str(post.surl)
+    url = "dbr:" + url[url.rfind("/") + 1:len(url)]
+    subject = str(post.subject)
+    subject = subject[subject.rfind(":") + 1:len(subject)]
+    name = "Chess"
+    query = """
            PREFIX dbo: <http://dbpedia.org/ontology/>
         	PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         	PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         	PREFIX dct: <http://purl.org/dc/terms/>
 
-        	SELECT distinct ?game ?name
+            SELECT COUNT(?game) SAMPLE(?game) ?game ?name
             WHERE
             {
                 ?game rdf:type dbo:Game.
                 ?game rdfs:label ?name.
                 FILTER(REGEX(?name,"%s","i")).
+                FILTER (?game != "%s") .
             } 
-            ORDER BY DESC(?movie)
-            limit 5
-        """ % name)
+            GROUP BY ?game ?name
+            ORDER BY DESC(COUNT(?game))
+            Limit 5
+        """ %(name, url)
+    sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
     return results

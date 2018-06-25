@@ -174,3 +174,13 @@ def select(request):
     print(posts)
 
     return HttpResponse(t.render({'search_type':json.dumps(search_type), 'search_condition':search_condition, 'posts': posts, 'postsFilmRecommend': postsFilmRecommend, 'postsBookRecommend': postsBookRecommend, 'postsGameRecommend': postsGameRecommend}))
+
+
+def visualize(request):
+    post = RecommendPost.objects.all()[:1]  # 根据第一个进行推荐
+    post = post[0]
+    postsFilmRecommend = FilmRecommendPost.objects.all()
+    postsBookRecommend = BookRecommendPost.objects.all()
+    postsGameRecommend = GameRecommendPost.objects.all()
+    t = loader.get_template('testGraphRecommend.html')
+    return HttpResponse(t.render({}))

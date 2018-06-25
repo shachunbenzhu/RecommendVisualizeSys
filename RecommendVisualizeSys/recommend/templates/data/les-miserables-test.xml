@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gexf xmlns="http://www.gexf.net/1.2draft" version="1.2" xmlns:viz="http://www.gexf.net/1.2draft/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd">
+  <meta lastmodifieddate="2014-01-30">
+    <creator>Gephi 0.8.1</creator>
+    <description></description>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static">
+    <attributes class="node" mode="static">
+      <attribute id="modularity_class" title="Modularity Class" type="integer"></attribute>
+    </attributes>
+    <nodes>
+      <node id="0" label="月球旅行记">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="100"></viz:size>
+        <viz:position x="-87.93029" y="-6.8120565" z="0.0"></viz:position>
+        <viz:color r="235" g="81" b="72"></viz:color>
+      </node>
+      <node id="1" label="Le voyage dans la lune">
+        <attvalues>
+          <attvalue for="modularity_class" value="1"></attvalue>
+        </attvalues>
+        <viz:size value="61.0"></viz:size>
+        <viz:position x="206.44687" y="-13.805411" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+      <node id="2" label="Le voyage dans la lune">
+        <attvalues>
+          <attvalue for="modularity_class" value="1"></attvalue>
+        </attvalues>
+        <viz:size value="34.485714"></viz:size>
+        <viz:position x="355.78366" y="-74.882454" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+      <node id="3" label="Alice In Wonderland">
+        <attvalues>
+          <attvalue for="modularity_class" value="1"></attvalue>
+        </attvalues>
+        <viz:size value="28.485714"></viz:size>
+        <viz:position x="387.89572" y="110.462326" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+      <node id="4" label="月世界旅行">
+        <attvalues>
+          <attvalue for="modularity_class" value="1"></attvalue>
+        </attvalues>
+        <viz:size value="20.0"></viz:size>
+        <viz:position x="162.63559" y="117.6565" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+      <node id="5" label="Liam">
+        <attvalues>
+          <attvalue for="modularity_class" value="1"></attvalue>
+        </attvalues>
+        <viz:size value="12.0"></viz:size>
+        <viz:position x="238.36697" y="-210.00926" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+      <node id="6" label="P.S. Your cat Is Dead">
+        <attvalues>
+          <attvalue for="modularity_class" value="2"></attvalue>
+        </attvalues>
+        <viz:size value="53.0"></viz:size>
+        <viz:position x="72.6012" y="235.16974" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+      <node id="7" label="P.S. Your cat Is Dead">
+        <attvalues>
+          <attvalue for="modularity_class" value="2"></attvalue>
+        </attvalues>
+        <viz:size value="31.0"></viz:size>
+        <viz:position x="-152.69568" y="305.09113" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+      <node id="8" label="Chess">
+        <attvalues>
+          <attvalue for="modularity_class" value="3"></attvalue>
+        </attvalues>
+        <viz:size value="25.94"></viz:size>
+        <viz:position x="-385.6842" y="-20.206686" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+      <node id="9" label="Cubic Chess">
+        <attvalues>
+          <attvalue for="modularity_class" value="3"></attvalue>
+        </attvalues>
+        <viz:size value="20.45"></viz:size>
+        <viz:position x="-387.84915" y="58.7059" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+      <node id="10" label="Chess960">
+        <attvalues>
+          <attvalue for="modularity_class" value="3"></attvalue>
+        </attvalues>
+        <viz:size value="20.45"></viz:size>
+        <viz:position x="-338.2307" y="87.48405" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+      <node id="11" label="Chess960">
+        <attvalues>
+          <attvalue for="modularity_class" value="3"></attvalue>
+        </attvalues>
+        <viz:size value="20.45"></viz:size>
+        <viz:position x="-453.26874" y="58.94648" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+      <node id="12" label="Bughouse chess">
+        <attvalues>
+          <attvalue for="modularity_class" value="3"></attvalue>
+        </attvalues>
+        <viz:size value="10.742859"></viz:size>
+        <viz:position x="-339.77908" y="-184.69139" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+    </nodes>
+    <edges>
+      <edge id="0" source="1" target="0">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="1" source="2" target="0" weight="8.0">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="2" source="3" target="0" weight="10.0">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="4" source="4" target="0">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="5" source="5" target="0">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="6" source="6" target="0">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="7" source="7" target="0">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="8" source="8" target="0" weight="2.0">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="9" source="9" target="0">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="10" source="10" target="0">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="11" source="11" target="0">
+        <attvalues></attvalues>
+      </edge>
+	  <edge id="12" source="12" target="0">
+        <attvalues></attvalues>
+      </edge>
+    </edges>
+  </graph>
+</gexf>

@@ -6,8 +6,6 @@ try:
     import xml.etree.CElementTree as ET
 except:
     import xml.etree.ElementTree as ET
-
-从Python3.3开始ElementTree模块会自动寻找可用的C库来加快速度
 '''
 import xml.etree.ElementTree as ET
 import os
